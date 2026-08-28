@@ -1,121 +1,24 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<title>لوحة المطور | MAGHRABY STORE</title>
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>لوحة المطور | MAGHRABY STORE</title>
 <style>
-:root{--bg:#030a16;--card:#0a1c32;--line:#214767;--blue:#2196ff;--muted:#9eb1c7;--green:#10b981;--danger:#ef5350}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,#0b2c51,#030a16 48%);color:#f4f8ff;font-family:Cairo,Arial,sans-serif;min-height:100vh}.wrap{width:min(1050px,calc(100% - 28px));margin:auto;padding:35px 0 70px}.top{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:25px}.brand{display:flex;align-items:center;gap:12px}.brand img{width:55px;height:55px;border-radius:50%;object-fit:cover}.brand b{display:block;font-family:Arial;font-size:19px;letter-spacing:1px}.brand small{color:#5bbaff;font-size:10px;letter-spacing:3px}.card{background:rgba(8,25,45,.88);border:1px solid var(--line);border-radius:20px;padding:24px;margin-bottom:18px;box-shadow:0 20px 50px #0004}h1,h2{margin:0 0 9px}h1{font-size:28px}h2{font-size:20px}.muted{color:var(--muted);font-size:13px;line-height:1.8}.hidden{display:none!important}label{display:block;font-size:12px;color:#a9bdd3;margin-bottom:7px}input{width:100%;padding:13px 14px;border-radius:11px;border:1px solid #244b6c;background:#041120;color:white;outline:none}input:focus{border-color:#389fff}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.drop{position:relative;min-height:315px;border:2px dashed #2d5d83;border-radius:17px;background:linear-gradient(145deg,#081d34,#04101f);display:flex;align-items:center;justify-content:center;overflow:hidden;transition:.2s}.drop.drag{border-color:#58b8ff;background:#0b2c4d}.drop.has-image{border-style:solid}.drop img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.drop .overlay{position:absolute;inset:auto 10px 10px 10px;background:#020914d9;border:1px solid #2c5475;border-radius:11px;padding:10px;font-size:12px}.drop-content{text-align:center;color:#8ea9c2;padding:18px}.drop-content strong{display:block;color:#fff;font-size:17px;margin-bottom:6px}.drop-content span{font-size:35px;display:block;color:#4bb0ff}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.btn{border:0;border-radius:11px;padding:11px 16px;font-weight:800;cursor:pointer;background:#1d8ef5;color:#fff}.btn.secondary{background:#17344f}.btn.green{background:var(--green)}.btn.danger{background:var(--danger)}.btn:disabled{opacity:.45;cursor:not-allowed}.status{padding:12px 14px;border-radius:10px;background:#07182a;color:#a9c1d7;font-size:12px;margin-top:12px}.login{max-width:480px;margin:100px auto}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.note{font-size:11px;color:#849bb2;margin-top:10px}.logout{background:#1b3048}.user{font-size:11px;color:#83a3be}.preview{margin-top:14px;padding:12px;border:1px solid #1e405e;border-radius:12px;background:#04101e;display:none}.preview img{width:100%;max-height:180px;object-fit:contain;border-radius:8px}.small{font-size:11px;color:#8da7bf}
-@media(max-width:760px){.grid{grid-template-columns:1fr}.row{grid-template-columns:1fr}.top{align-items:flex-start}.login{margin:45px auto}}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <div id="loginView" class="card login">
-    <div class="brand"><img src="assets/logo.jpg" alt=""><div><b>MAGHRABY STORE</b><small>DEVELOPER AREA</small></div></div>
-    <h1 style="margin-top:25px">دخول المطور</h1>
-    <p class="muted">الصفحة دي لك أنت فقط. الزائر العادي لا يقدر يدخل لوحة التحكم.</p>
-    <label>البريد الإلكتروني</label><input id="email" type="email" autocomplete="username" placeholder="Email">
-    <label style="margin-top:12px">كلمة المرور</label><input id="password" type="password" autocomplete="current-password" placeholder="Password">
-    <div class="actions"><button id="loginBtn" class="btn green">دخول</button></div>
-    <div id="loginStatus" class="status"></div>
-    <p class="note">يجب إنشاء حساب المطور من Supabase مرة واحدة، ثم يصبح أول حساب هو حساب المطور.</p>
-  </div>
-
-  <div id="dashboard" class="hidden">
-    <div class="top">
-      <div class="brand"><img src="assets/logo.jpg" alt=""><div><b>MAGHRABY STORE</b><small>DEVELOPER AREA</small><div id="currentUser" class="user"></div></div></div>
-      <button id="logoutBtn" class="btn logout">تسجيل خروج</button>
-    </div>
-
-    <div class="card">
-      <h1>لوحة التحكم</h1>
-      <p class="muted">اسحب صورة من جهازك وأسقطها داخل الخانة المطلوبة. لكل قسم <b>صورة واحدة فقط</b>. عند رفع صورة جديدة يتم استبدال القديمة تلقائياً.</p>
-      <div id="globalStatus" class="status">جاهز.</div>
-    </div>
-
-    <div class="grid">
-      <div class="card"><h2>🛠️ شغلنا</h2><p class="small">صورة واحدة</p><div class="drop" data-section="work"><div class="drop-content"><span>⇧</span><strong>اسحب الصورة هنا</strong><small>أو اضغط لاختيار صورة</small></div><input class="fileInput" type="file" accept="image/*" hidden></div><div class="actions"><button class="btn secondary chooseBtn">اختيار صورة</button><button class="btn danger deleteBtn">حذف</button></div></div>
-      <div class="card"><h2>🔥 آخر العروض</h2><p class="small">صورة واحدة</p><div class="drop" data-section="offers"><div class="drop-content"><span>⇧</span><strong>اسحب الصورة هنا</strong><small>أو اضغط لاختيار صورة</small></div><input class="fileInput" type="file" accept="image/*" hidden></div><div class="actions"><button class="btn secondary chooseBtn">اختيار صورة</button><button class="btn danger deleteBtn">حذف</button></div></div>
-      <div class="card"><h2>✨ آخر الإضافات</h2><p class="small">صورة واحدة</p><div class="drop" data-section="latest"><div class="drop-content"><span>⇧</span><strong>اسحب الصورة هنا</strong><small>أو اضغط لاختيار صورة</small></div><input class="fileInput" type="file" accept="image/*" hidden></div><div class="actions"><button class="btn secondary chooseBtn">اختيار صورة</button><button class="btn danger deleteBtn">حذف</button></div></div>
-    </div>
-  </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js"></script>
-<script src="js/supabase-client.js"></script>
+:root{--bg:#030a16;--card:#0a1c32;--line:#214767;--blue:#2196ff;--muted:#9eb1c7;--green:#10b981;--danger:#ef5350}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,#0b2c51,#030a16 48%);color:#f4f8ff;font-family:Cairo,Arial,sans-serif;min-height:100vh}.wrap{width:min(1120px,calc(100% - 28px));margin:auto;padding:30px 0 70px}.top{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:12px}.brand img{width:55px;height:55px;border-radius:50%;object-fit:cover}.brand b{display:block;font-family:Arial;font-size:19px;letter-spacing:1px}.brand small{color:#5bbaff;font-size:10px;letter-spacing:3px}.card{background:rgba(8,25,45,.9);border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:16px;box-shadow:0 20px 50px #0004}h1,h2{margin:0 0 8px}h1{font-size:28px}h2{font-size:20px}.muted{color:var(--muted);font-size:13px;line-height:1.8}.hidden{display:none!important}label{display:block;font-size:12px;color:#a9bdd3;margin-bottom:7px}input{width:100%;padding:13px 14px;border-radius:11px;border:1px solid #244b6c;background:#041120;color:white;outline:none}input:focus{border-color:#389fff}.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.section-card{padding:18px}.drop{min-height:220px;border:2px dashed #2d5d83;border-radius:17px;background:linear-gradient(145deg,#081d34,#04101f);display:flex;align-items:center;justify-content:center;overflow:hidden;transition:.2s;position:relative}.drop.drag{border-color:#58b8ff;background:#0b2c4d}.drop-content{text-align:center;color:#8ea9c2;padding:18px}.drop-content strong{display:block;color:#fff;font-size:16px;margin-bottom:5px}.drop-content span{font-size:35px;display:block;color:#4bb0ff}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.btn{border:0;border-radius:11px;padding:10px 15px;font-weight:800;cursor:pointer;background:#1d8ef5;color:#fff}.btn.secondary{background:#17344f}.btn.green{background:var(--green)}.btn.danger{background:var(--danger)}.btn:disabled{opacity:.45;cursor:not-allowed}.status{padding:12px 14px;border-radius:10px;background:#07182a;color:#a9c1d7;font-size:12px;margin-top:10px}.login{max-width:480px;margin:100px auto}.note{font-size:11px;color:#849bb2;margin-top:10px}.logout{background:#1b3048}.user{font-size:11px;color:#83a3be}.thumbs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}.thumb{position:relative;height:130px;border-radius:12px;overflow:hidden;border:1px solid #244b6c;background:#04101e}.thumb img{width:100%;height:100%;object-fit:cover}.thumb button{position:absolute;top:7px;left:7px;width:30px;height:30px;border:0;border-radius:50%;background:#ef5350;color:white;font-weight:900;cursor:pointer}.count{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:99px;background:#09243e;color:#8fc9f7;font-size:10px;margin-top:3px}@media(max-width:850px){.gallery-grid{grid-template-columns:1fr}.thumbs{grid-template-columns:repeat(3,1fr)}}@media(max-width:560px){.thumbs{grid-template-columns:repeat(2,1fr)}.top{align-items:flex-start}.login{margin:45px auto}}
+</style></head><body><div class="wrap">
+<div id="loginView" class="card login"><div class="brand"><img src="assets/logo.jpg" alt=""><div><b>MAGHRABY STORE</b><small>DEVELOPER AREA</small></div></div><h1 style="margin-top:25px">دخول المطور</h1><p class="muted">لوحة خاصة بك فقط. الزائر العادي لا يملك أي تحكم.</p><label>البريد الإلكتروني</label><input id="email" type="email" autocomplete="username" placeholder="Email"><label style="margin-top:12px">كلمة المرور</label><input id="password" type="password" autocomplete="current-password" placeholder="Password"><div class="actions"><button id="loginBtn" class="btn green">دخول</button></div><div id="loginStatus" class="status"></div></div>
+<div id="dashboard" class="hidden"><div class="top"><div class="brand"><img src="assets/logo.jpg" alt=""><div><b>MAGHRABY STORE</b><small>DEVELOPER AREA</small><div id="currentUser" class="user"></div></div></div><button id="logoutBtn" class="btn logout">تسجيل خروج</button></div>
+<div class="card"><h1>لوحة الصور</h1><p class="muted">دلوقتي تقدر ترفع <b>أي عدد من الصور</b> لكل قسم. اسحب أكثر من صورة مرة واحدة، أو اختار صور متعددة. الصور تظهر للزوار تلقائياً.</p><div id="globalStatus" class="status">جاهز.</div></div>
+<div class="gallery-grid" id="sections"></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/config.js"></script><script src="js/supabase-client.js"></script>
 <script>
-const meta={work:'شغلنا',offers:'آخر العروض',latest:'آخر الإضافات'};
+const meta={work:{title:'🛠️ شغلنا',sub:'صور الصيانة والشغل والنتائج'},offers:{title:'🔥 آخر العروض',sub:'صور العروض والخصومات'},latest:{title:'✨ آخر الإضافات',sub:'أحدث الأجهزة والإكسسوارات'}};
 const loginView=document.getElementById('loginView'),dashboard=document.getElementById('dashboard');
-function status(msg, good=false){const e=document.getElementById('globalStatus');e.textContent=msg;e.style.color=good?'#77e0ba':'#a9c1d7'}
-function loginStatus(msg){document.getElementById('loginStatus').textContent=msg}
-function ready(){return !!supabaseClient}
-function showDash(session){loginView.classList.add('hidden');dashboard.classList.remove('hidden');document.getElementById('currentUser').textContent=session.user.email||'';loadAll()}
-async function init(){
-  if(!ready()){loginStatus('أكمل بيانات Supabase داخل js/config.js أولاً.');return}
-  const {data}=await supabaseClient.auth.getSession();
-  if(data.session) showDash(data.session);
-}
-
-document.getElementById('loginBtn').onclick=async()=>{
-  if(!ready()){loginStatus('بيانات Supabase غير مكتملة.');return}
-  const email=document.getElementById('email').value.trim(), password=document.getElementById('password').value;
-  if(!email||!password){loginStatus('اكتب البريد وكلمة المرور.');return}
-  loginStatus('جارٍ الدخول...');
-  const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
-  if(error){loginStatus('فشل الدخول: '+error.message);return}
-  showDash(data.session);
-};
+function status(m,g=false){const e=document.getElementById('globalStatus');e.textContent=m;e.style.color=g?'#77e0ba':'#a9c1d7'}function loginStatus(m){document.getElementById('loginStatus').textContent=m}
+function showDash(s){loginView.classList.add('hidden');dashboard.classList.remove('hidden');document.getElementById('currentUser').textContent=s.user.email||'';buildSections();loadAll()}
+async function init(){if(!supabaseClient){loginStatus('بيانات Supabase غير مكتملة.');return}const {data}=await supabaseClient.auth.getSession();if(data.session)showDash(data.session)}
+document.getElementById('loginBtn').onclick=async()=>{const email=document.getElementById('email').value.trim(),password=document.getElementById('password').value;if(!email||!password){loginStatus('اكتب البريد وكلمة المرور.');return}loginStatus('جارٍ الدخول...');const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});if(error){loginStatus('فشل الدخول: '+error.message);return}showDash(data.session)};
 document.getElementById('logoutBtn').onclick=()=>supabaseClient.auth.signOut().then(()=>location.reload());
-
-function setupDrop(box){
-  const input=box.querySelector('.fileInput');
-  box.parentElement.querySelector('.chooseBtn').onclick=()=>input.click();
-  box.onclick=e=>{if(e.target===box || e.target.closest('.drop-content')) input.click()};
-  ['dragenter','dragover'].forEach(ev=>box.addEventListener(ev,e=>{e.preventDefault();box.classList.add('drag')}));
-  ['dragleave','drop'].forEach(ev=>box.addEventListener(ev,e=>{e.preventDefault();box.classList.remove('drag')}));
-  box.addEventListener('drop',e=>{const f=e.dataTransfer.files?.[0];if(f) upload(box,f)});
-  input.onchange=()=>{if(input.files?.[0]) upload(box,input.files[0]);input.value=''};
-  box.parentElement.querySelector('.deleteBtn').onclick=()=>removeImage(box.dataset.section,box);
-}
-async function upload(box,file){
-  if(!file.type.startsWith('image/')) return status('اختار ملف صورة فقط.');
-  if(file.size>8*1024*1024) return status('الصورة أكبر من 8MB.');
-  status('جارٍ رفع صورة '+meta[box.dataset.section]+'...');
-  const section=box.dataset.section;
-  const ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';
-  const path=`${section}/${Date.now()}-${crypto.randomUUID()}.${ext}`;
-  const {error:upErr}=await supabaseClient.storage.from('store-images').upload(path,file,{cacheControl:'3600',upsert:false,contentType:file.type});
-  if(upErr){status('فشل رفع الصورة: '+upErr.message);return}
-  const {data:pub}=supabaseClient.storage.from('store-images').getPublicUrl(path);
-  const {data:old}=await supabaseClient.from('site_sections').select('image_path').eq('section',section).maybeSingle();
-  const {error:dbErr}=await supabaseClient.from('site_sections').upsert({section,image_path:path,image_url:pub.publicUrl,updated_at:new Date().toISOString()},{onConflict:'section'});
-  if(dbErr){await supabaseClient.storage.from('store-images').remove([path]);status('فشل حفظ البيانات: '+dbErr.message);return}
-  if(old?.image_path) await supabaseClient.storage.from('store-images').remove([old.image_path]);
-  renderBox(box,{image_url:pub.publicUrl,image_path:path});
-  status('تم نشر صورة '+meta[section]+' بنجاح ✓',true);
-}
-async function removeImage(section,box){
-  if(!confirm('هل تريد حذف صورة '+meta[section]+'؟')) return;
-  status('جارٍ الحذف...');
-  const {data:old}=await supabaseClient.from('site_sections').select('image_path').eq('section',section).maybeSingle();
-  const {error}=await supabaseClient.from('site_sections').delete().eq('section',section);
-  if(error){status('فشل الحذف: '+error.message);return}
-  if(old?.image_path) await supabaseClient.storage.from('store-images').remove([old.image_path]);
-  renderBox(box,null);status('تم حذف صورة '+meta[section]+' ✓',true);
-}
-function renderBox(box,row){
-  if(row?.image_url){box.classList.add('has-image');box.innerHTML=`<img src="${row.image_url}" alt="${meta[box.dataset.section]}"><div class="overlay">${meta[box.dataset.section]} — الصورة الحالية<br><span>اسحب صورة جديدة لاستبدالها</span></div><input class="fileInput" type="file" accept="image/*" hidden>`;}
-  else{box.classList.remove('has-image');box.innerHTML=`<div class="drop-content"><span>⇧</span><strong>اسحب الصورة هنا</strong><small>أو اضغط لاختيار صورة</small></div><input class="fileInput" type="file" accept="image/*" hidden>`}
-  setupDrop(box);
-}
-async function loadAll(){
-  const {data,error}=await supabaseClient.from('site_sections').select('section,image_url,image_path');
-  if(error){status('تعذر تحميل الصور: '+error.message);return}
-  document.querySelectorAll('.drop').forEach(box=>{const row=(data||[]).find(x=>x.section===box.dataset.section);renderBox(box,row||null)});
-  status('تم تحميل الصور الحالية ✓',true);
-}
-document.querySelectorAll('.drop').forEach(setupDrop);init();
-</script>
-</body></html>
+function buildSections(){document.getElementById('sections').innerHTML=Object.entries(meta).map(([key,m])=>`<div class="card section-card"><h2>${m.title}</h2><p class="muted">${m.sub}</p><span class="count" id="count-${key}">0 صورة</span><div class="drop" data-section="${key}"><div class="drop-content"><span>⇧</span><strong>اسحب الصور هنا</strong><small>أو اختار أكثر من صورة</small></div><input class="fileInput" type="file" accept="image/*" multiple hidden></div><div class="actions"><button class="btn secondary chooseBtn">اختيار صور</button></div><div class="thumbs" id="thumbs-${key}"></div></div>`).join('');document.querySelectorAll('.drop').forEach(setupDrop)}
+function setupDrop(box){const input=box.querySelector('.fileInput');const choose=box.parentElement.querySelector('.chooseBtn');choose.onclick=()=>input.click();box.onclick=e=>{if(e.target===box||e.target.closest('.drop-content'))input.click()};['dragenter','dragover'].forEach(ev=>box.addEventListener(ev,e=>{e.preventDefault();box.classList.add('drag')}));['dragleave','drop'].forEach(ev=>box.addEventListener(ev,e=>{e.preventDefault();box.classList.remove('drag')}));box.addEventListener('drop',e=>{const files=[...e.dataTransfer.files].filter(f=>f.type.startsWith('image/'));if(files.length)uploadMany(box.dataset.section,files)});input.onchange=()=>{const files=[...input.files].filter(f=>f.type.startsWith('image/'));if(files.length)uploadMany(box.dataset.section,files);input.value=''}}
+async function uploadMany(section,files){if(files.some(f=>f.size>8*1024*1024)){status('في صورة أكبر من 8MB. اختار صور أصغر.');return}status(`جارٍ رفع ${files.length} صورة في ${meta[section].title}...`);for(const file of files){const ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';const path=`${section}/${Date.now()}-${crypto.randomUUID()}.${ext}`;const {error:upErr}=await supabaseClient.storage.from('store-images').upload(path,file,{cacheControl:'3600',upsert:false,contentType:file.type});if(upErr){status('فشل رفع '+file.name+': '+upErr.message);continue}const {data:pub}=supabaseClient.storage.from('store-images').getPublicUrl(path);const {data:last}=await supabaseClient.from('media_items').select('sort_order').eq('section',section).order('sort_order',{ascending:false}).limit(1).maybeSingle();const order=(last?.sort_order??-1)+1;const {error:dbErr}=await supabaseClient.from('media_items').insert({section,image_path:path,image_url:pub.publicUrl,sort_order:order});if(dbErr){await supabaseClient.storage.from('store-images').remove([path]);status('فشل حفظ '+file.name+': '+dbErr.message);continue}}await loadAll();status(`تم رفع ${files.length} صورة بنجاح ✓`,true)}
+async function loadAll(){const {data,error}=await supabaseClient.from('media_items').select('id,section,image_url,image_path,sort_order,created_at').order('sort_order',{ascending:true}).order('created_at',{ascending:true});if(error){status('تعذر تحميل الصور: '+error.message);return}for(const key of Object.keys(meta)){const rows=(data||[]).filter(x=>x.section===key);document.getElementById('count-'+key).textContent=rows.length+' صورة';document.getElementById('thumbs-'+key).innerHTML=rows.map(r=>`<div class="thumb"><img src="${r.image_url}" alt=""><button title="حذف" onclick="deleteImage('${r.id}', '${r.image_path}', '${key}')">×</button></div>`).join('')}}
+async function deleteImage(id,path,section){if(!confirm('حذف هذه الصورة؟'))return;status('جارٍ الحذف...');const {error:dbErr}=await supabaseClient.from('media_items').delete().eq('id',id);if(dbErr){status('فشل الحذف: '+dbErr.message);return}if(path)await supabaseClient.storage.from('store-images').remove([path]);await loadAll();status('تم حذف الصورة ✓',true)}
+init();
+</script></body></html>
