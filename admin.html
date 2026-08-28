@@ -86,13 +86,13 @@ async function upload(box,file){
   const section=box.dataset.section;
   const ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';
   const path=`${section}/${Date.now()}-${crypto.randomUUID()}.${ext}`;
-  const {error:upErr}=await supabaseClient.storage.from('site-images').upload(path,file,{cacheControl:'3600',upsert:false,contentType:file.type});
+  const {error:upErr}=await supabaseClient.storage.from('store-images').upload(path,file,{cacheControl:'3600',upsert:false,contentType:file.type});
   if(upErr){status('فشل رفع الصورة: '+upErr.message);return}
-  const {data:pub}=supabaseClient.storage.from('site-images').getPublicUrl(path);
+  const {data:pub}=supabaseClient.storage.from('store-images').getPublicUrl(path);
   const {data:old}=await supabaseClient.from('site_sections').select('image_path').eq('section',section).maybeSingle();
   const {error:dbErr}=await supabaseClient.from('site_sections').upsert({section,image_path:path,image_url:pub.publicUrl,updated_at:new Date().toISOString()},{onConflict:'section'});
-  if(dbErr){await supabaseClient.storage.from('site-images').remove([path]);status('فشل حفظ البيانات: '+dbErr.message);return}
-  if(old?.image_path) await supabaseClient.storage.from('site-images').remove([old.image_path]);
+  if(dbErr){await supabaseClient.storage.from('store-images').remove([path]);status('فشل حفظ البيانات: '+dbErr.message);return}
+  if(old?.image_path) await supabaseClient.storage.from('store-images').remove([old.image_path]);
   renderBox(box,{image_url:pub.publicUrl,image_path:path});
   status('تم نشر صورة '+meta[section]+' بنجاح ✓',true);
 }
@@ -102,7 +102,7 @@ async function removeImage(section,box){
   const {data:old}=await supabaseClient.from('site_sections').select('image_path').eq('section',section).maybeSingle();
   const {error}=await supabaseClient.from('site_sections').delete().eq('section',section);
   if(error){status('فشل الحذف: '+error.message);return}
-  if(old?.image_path) await supabaseClient.storage.from('site-images').remove([old.image_path]);
+  if(old?.image_path) await supabaseClient.storage.from('store-images').remove([old.image_path]);
   renderBox(box,null);status('تم حذف صورة '+meta[section]+' ✓',true);
 }
 function renderBox(box,row){

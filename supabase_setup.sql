@@ -80,7 +80,7 @@ using (exists (select 1 from public.admins a where a.id = auth.uid()));
 
 -- Storage bucket للصور. اجعله Public لأن الموقع الرئيسي يحتاج قراءة الصور.
 insert into storage.buckets (id, name, public)
-values ('site-images','site-images',true)
+values ('store-images','store-images',true)
 on conflict (id) do update set public = true;
 
 -- أي شخص يستطيع قراءة الصور العامة.
@@ -88,24 +88,24 @@ drop policy if exists "public can view site images" on storage.objects;
 create policy "public can view site images"
 on storage.objects for select
 to anon, authenticated
-using (bucket_id = 'site-images');
+using (bucket_id = 'store-images');
 
 -- المطورون فقط يستطيعون الرفع والتعديل والحذف.
 drop policy if exists "admins can upload site images" on storage.objects;
 create policy "admins can upload site images"
 on storage.objects for insert
 to authenticated
-with check (bucket_id = 'site-images' and exists (select 1 from public.admins a where a.id = auth.uid()));
+with check (bucket_id = 'store-images' and exists (select 1 from public.admins a where a.id = auth.uid()));
 
 drop policy if exists "admins can update site images" on storage.objects;
 create policy "admins can update site images"
 on storage.objects for update
 to authenticated
-using (bucket_id = 'site-images' and exists (select 1 from public.admins a where a.id = auth.uid()))
-with check (bucket_id = 'site-images' and exists (select 1 from public.admins a where a.id = auth.uid()));
+using (bucket_id = 'store-images' and exists (select 1 from public.admins a where a.id = auth.uid()))
+with check (bucket_id = 'store-images' and exists (select 1 from public.admins a where a.id = auth.uid()));
 
 drop policy if exists "admins can delete site images" on storage.objects;
 create policy "admins can delete site images"
 on storage.objects for delete
 to authenticated
-using (bucket_id = 'site-images' and exists (select 1 from public.admins a where a.id = auth.uid()));
+using (bucket_id = 'store-images' and exists (select 1 from public.admins a where a.id = auth.uid()));

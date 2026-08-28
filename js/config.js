@@ -16,6 +16,6 @@ const SITE_CONFIG = {
   maps: "https://maps.app.goo.gl/nBXHDmLEKSs9guVv5?g_st=atm",
 
   // من Supabase Dashboard > Project Settings > API
-  supabaseUrl: "ضع_رابط_مشروع_Supabase_هنا",
-  supabaseAnonKey: "ضع_Anon_Key_هنا"
+  supabaseUrl: "https://uplxzgviccnelxekgsvx.supabase.co",
+  supabaseAnonKey: "sb_publishable_NsJutn1YgO8PcWRisHceOQ_nhm4Sv52"
 };
