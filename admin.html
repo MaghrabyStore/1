@@ -71,7 +71,7 @@ document.getElementById('logoutBtn').onclick=()=>supabaseClient.auth.signOut().t
 
 function setupDrop(box){
   const input=box.querySelector('.fileInput');
-  box.querySelector('.chooseBtn').onclick=()=>input.click();
+  box.parentElement.querySelector('.chooseBtn').onclick=()=>input.click();
   box.onclick=e=>{if(e.target===box || e.target.closest('.drop-content')) input.click()};
   ['dragenter','dragover'].forEach(ev=>box.addEventListener(ev,e=>{e.preventDefault();box.classList.add('drag')}));
   ['dragleave','drop'].forEach(ev=>box.addEventListener(ev,e=>{e.preventDefault();box.classList.remove('drag')}));
